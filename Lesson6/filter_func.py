@@ -1,0 +1,5 @@
+names = ("Petya", "Vanya", "Sasha", "As")
+result = tuple(filter(lambda x: len(x) > 4, names))
+print(result)
+new_names = tuple(filter(lambda x: len(x) < 3, names))
+print(new_names)
