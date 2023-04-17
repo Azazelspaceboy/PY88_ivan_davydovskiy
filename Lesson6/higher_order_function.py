@@ -1,4 +1,4 @@
-def hey(func, x = 10):
+def hey(func, x=10):
     for i in range(x):
         print(f"{i+1}", end="\t")
         func()
