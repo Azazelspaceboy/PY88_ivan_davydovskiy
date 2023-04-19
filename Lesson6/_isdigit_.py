@@ -14,7 +14,10 @@ def checker(x: str):
 
 
 checker("-11.7")
-checker("11.2")
+checker("123.122.123")
 checker("-1")
 checker("11r")
-checker("-.814")
+checker(".-814")
+
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+def checker
