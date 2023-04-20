@@ -1,22 +1,23 @@
-def checker(x: str):
+def checker(x: str) -> str:
     if x.isdigit():
-        print(f"{x}: positive integer")
-    elif '-' in x and x[1].isdigit() and '.' not in x:
-        print(f"{x}: negative integer")
-    elif '.' in x and (x[0:x.index('.')-1] + x[x.index('.')+1]).isdigit() and '-' not in x:
-        print(f"{x}: positive fractional number")
-    elif '-' in x and (x[1:x.index('.')-1] + x[x.index('.')+1]).isdigit() and (x[:2] != '-.' or x[:2] != '-.'):
-        print(f"{x}: negative fractional number")
-    elif x[:2] == '-.' or x[:2] == '.-':
-        print(f"{x}: invalid value")
+        return f"{x}: positive integer"
+    elif (x.replace('.', '')).replace('-', '').isdigit():
+        if x.count('.') > 1 or '.' == x[len(x)-1]:
+            return f"{x}: invalid value"
+        elif x.count('-') > 1 or '-' != x[0]:
+            return f"{x}: invalid value"
+        elif "-." in x or ".-" in x:
+            return f"{x} invalid value"
+        else:
+            if '.' in x and '-' not in x:
+                return f"{x}: positive fractional number"
+            elif '.' in x and '-' in x:
+                return f"{x}: negative fractional number"
+            elif '-' in x and x.replace('-', '').isdigit():
+                return f"{x}: negative integer"
     else:
-        print(f"{x}: invalid value")
+        return f"{x}: invalid value"
 
 
-checker("-11.7")
-checker("123.122.123")
-checker("-1")
-checker("11r")
-checker(".-814")
-
+print(checker("1234568765432"))
 
