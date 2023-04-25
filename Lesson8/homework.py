@@ -1,28 +1,25 @@
 import json as j
 
 
-class Users:
+class User:
+    def __init__(self, name: str, password: str):
+        self.name = name
+        self.password = password
+
+
+class Storage:
     def __init__(self):
-        self.users = []
-        self.names = []
-        self.passwords = []
+        self.saved_data = {}
+        self.__data_update()
 
-    def data_update(self):
-        data = data_update()
-        for i, s in data.items():
-            self.users.append((i, s))
-            self.names.append(i)
-            self.passwords.append(s)
-
-
-def data_update():
-    with open("saved_data.json", 'r') as file_reader:
-        data = j.load(file_reader)
-        return data
+    def __data_update(self):
+        with open("saved_data.json", 'r') as file_reader:
+            data = j.load(file_reader)
+            self.saved_data.update(data)
 
 
 def check_name(name: str) -> str:
-    while 3 > len(name) > 10:
+    while 3 > len(name) or len(name) > 10:
         print("Something went wrong\nTry again")
         name = input("Enter your name again: ")
     return name
@@ -48,7 +45,7 @@ def get_password() -> str:
 def authentication():
     print("***Authentication***")
     name, password = get_name(), get_password()
-    while (name, password) not in user.users:
+    while (name, password) not in class_data:
         print("Something went wrong\nTry again!")
         choice = input("Would you like to get back for registration(Y,N): ")
         while choice.lower() not in commands:
@@ -64,7 +61,7 @@ def authentication():
 def registration():
     print("***Registration***")
     name, password = get_name(), get_password()
-    while name in user.names:
+    while name in names:
         print("User with that name already exists\n")
         choice = input("Do you have an account(Y,N): ")
         while choice.lower() not in commands:
@@ -83,8 +80,10 @@ def registration():
 
 
 commands = ['y', 'n']
-user = Users()
-user.data_update()
+data_base = Storage().saved_data
+users = list(map(lambda x: User(x, data_base[x]), data_base.keys()))
+class_data = list(map(lambda x: (users[x].name, users[x].password), [i for i in range(len(users))]))
+names = [class_data[i][0] for i in range(len(class_data))]
 
 
 while True:
@@ -98,5 +97,6 @@ while True:
         break
     else:
         registration()
-        print("Welcome to the system!")
+        print("Welcome to the system")
         break
+
